@@ -10,12 +10,10 @@ function attemptPush(){
     list.push(data);
     //add div to page
     var itemList = document.getElementById("itemsDiv");
-    let a = document.createElement("DIV");
-    a.setAttribute("class", "item-bar");
-    a.innerHTML = "<a>"+data+"</a>";
+    itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><a>"+data+"</a></div>";
+    itemList.innerHTML += "<div class='cell tar'><input type='button' onclick='' value='&#10005;' /></div><br>";
     //onclick="unlist("+data+")"
-    a.innerHTML += "<input type='button' onclick='' value='x' />";
-    itemList.parentNode.appendChild(a);
+    //itemList.parentNode.appendChild(a);
     
     //itemList.innerHTML += "<p>"+data+"</p>"
     //remove text from search
@@ -36,6 +34,13 @@ function isValidItem(data){
       }
       return true;
     }
+  }
+  return false;
+}
+
+function inList(data){
+  for(let i=0; i<list.length; i++){
+    if(data === list[i])return true;
   }
   return false;
 }
