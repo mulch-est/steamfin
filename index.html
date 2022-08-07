@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<!-- add funds feature later? -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <p style="color:red;">Warning! Adding too many items to the list may cause Steam to refuse your request!</p>
+  <!--Make sure the form has the autocomplete function switched off:-->
+  <form autocomplete="off" action="javascript:attemptPush()">
+    <div class="autocomplete" style="width:300px;">
+      <input id="searchAuto" type="text" name="myCountry" placeholder="Item">
+    </div>
+    <input type="submit" value="Add">
+
+    <h3>Items</h3>
+    
+    <div id="itemsDiv">
+      <!-- list will be generated here -->
+    </div>
+    
+    <!--<input type="submit" value="Go">-->
+  </form>
+
+  <input type="button" onclick="getLink()" value="Go" />
+
+  <script src="cases.js"></script>
+  <script src="items.js"></script>
+  <script src="autocomplete.js"></script>
+  <script src="itemlist.js"></script>
+  <script src="buildlink.js"></script>
+  
+  <!--
+  <div class="search-container">
+    <form action="https://www.google.com">
+      <input type="text" placeholder="Search.." name="search">
+      <button><img src="images/search_icon.png" style="width: 25px; 
+  height: 25px; object-fit: scale-down;"/></button>
+      
+    </form>
+  </div>
+  
+  <script src="script.js"></script>-->
+
+ <!--
+  This script places a badge on your repl's full-browser view back to your repl's cover
+  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
+  teal, blue, blurple, magenta, pink!
+  
+  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
+  -->
+</body>
+
+</html>
