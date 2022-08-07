@@ -21,40 +21,42 @@ function autocomplete(inp, arr) {
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
       for (let i = 0; i < arr.length; i++) {
-        var checkArr = autocompleteCheck(val, arr[i]);
-        if (checkArr[0]) {
-          /*create a DIV element for each matching element:*/
-          let b = document.createElement("DIV");
-          b.innerHTML = "<p>";
-          /*make the matching letters bold:*/
-          for(let j=0; j<arr[i].length; j++){
-            var wrote = -1;
-            for(let k=0; k<checkArr[1].length; k++){
-              //character must be bolded
-              if(arr[i][j] === checkArr[1][k]){
-                b.innerHTML += "<b>" + arr[i][j] + "</b>";
-                wrote = k;
-                break;
+        if(!inList(arr[i])){
+          var checkArr = autocompleteCheck(val, arr[i]);
+          if (checkArr[0]) {
+            /*create a DIV element for each matching element:*/
+            let b = document.createElement("DIV");
+            b.innerHTML = "<p>";
+            /*make the matching letters bold:*/
+            for(let j=0; j<arr[i].length; j++){
+              var wrote = -1;
+              for(let k=0; k<checkArr[1].length; k++){
+                //character must be bolded
+                if(arr[i][j] === checkArr[1][k]){
+                  b.innerHTML += "<b>" + arr[i][j] + "</b>";
+                  wrote = k;
+                  break;
+                }
               }
+              if(wrote === -1){
+                b.innerHTML += arr[i][j];
+              }else checkArr[1].splice(wrote, 1);
             }
-            if(wrote === -1){
-              b.innerHTML += arr[i][j];
-            }else checkArr[1].splice(wrote, 1);
+            b.innerHTML += "</p>";
+            //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            //b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
           }
-          b.innerHTML += "</p>";
-          //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          //b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
         }
       }
   });
