@@ -40,9 +40,10 @@ input[type=button] {
   cursor: pointer;
 }
 
+/*
 form a {
-  padding-right:8px;
-}
+  
+}*/
 
 form input[type=button] {
   background-color: crimson;
@@ -84,6 +85,17 @@ form input[type=button] {
 }*/
 
 .item-bar {
+  position: relative;
+  display: table;
   background-color: powderblue;
-  padding:4px;
+  padding:10px;
+  
+}
+
+.cell{
+  display:table-cell;
+}
+
+.tar{
+  text-align:right;
 }
