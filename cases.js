@@ -1,4 +1,3 @@
-/* creates an array of all cases to put into the item array */
 var cases = ["Chroma 2 Case", 
              "Chroma 3 Case", 
              "Chroma Case", 
