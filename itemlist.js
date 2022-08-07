@@ -6,23 +6,44 @@ function attemptPush(){
   let data = document.getElementById("searchAuto").value;
   //check if data represents valid item
   if(isValidItem(data)){
-    //push valid item to list
+    //push item to list
     list.push(data);
-    //add div to page
-    var itemList = document.getElementById("itemsDiv");
-    itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><a>"+data+"</a></div>";
-    itemList.innerHTML += "<div class='cell tar'><input type='button' onclick='' value='&#10005;' /></div><br>";
-    //onclick="unlist("+data+")"
-    //itemList.parentNode.appendChild(a);
-    
-    //itemList.innerHTML += "<p>"+data+"</p>"
+    pushToList(data);
     //remove text from search
     document.getElementById("searchAuto").value = "";
   }
 }
 
+function pushToList(data){
+  //add div to page
+  var itemList = document.getElementById("itemsDiv");
+  itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><a>"+data+"</a></div>";
+  itemList.innerHTML += "<div class='cell tar'><input type='button' onclick='unlist(\""+data+"\")' value='&#10005;' /></div><br>";
+}
+
+/* called by x button, passed string item name */
 function unlist(item){
-  //stub
+  console.log("xed "+item);
+  var itemLoc = -1;
+  for(let i=0; i<list.length; i++){
+    if(list[i] === item){
+      itemLoc = i;
+      break;
+    }
+  }
+  if(itemLoc !== -1)list.splice(itemLoc, 1);
+  refreshList();
+}
+
+//refreshes item list ui to display contents in list
+function refreshList(){
+  //reset item list div
+  var itemList = document.getElementById("itemsDiv");
+  itemList.innerHTML = "";
+  //push each element in list
+  for(let i=0; i<list.length; i++){
+    pushToList(list[i]);
+  }
 }
 
 //checks whether an element in items (items.js) is equal to <data> and not in list
