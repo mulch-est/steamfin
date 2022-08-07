@@ -13,38 +13,25 @@
   <!--Make sure the form has the autocomplete function switched off:-->
   <form autocomplete="off" action="javascript:attemptPush()">
     <div class="autocomplete" style="width:300px;">
-      <input id="searchAuto" type="text" name="myCountry" placeholder="Item">
+      <input id="searchAuto" type="text" placeholder="Item">
     </div>
     <input type="submit" value="Add">
-
+  
     <h3>Items</h3>
-    
-    <div id="itemsDiv">
+    <div id="itemsDiv" class="items-list">
       <!-- list will be generated here -->
     </div>
-    
-    <!--<input type="submit" value="Go">-->
   </form>
 
   <input type="button" onclick="getLink()" value="Go" />
 
-  <script src="cases.js"></script>
+  <script src="itemDB/cases.js"></script>
+  <script src="itemDB/antwerp-2022.js"></script>
   <script src="items.js"></script>
+  
   <script src="autocomplete.js"></script>
   <script src="itemlist.js"></script>
   <script src="buildlink.js"></script>
-  
-  <!--
-  <div class="search-container">
-    <form action="https://www.google.com">
-      <input type="text" placeholder="Search.." name="search">
-      <button><img src="images/search_icon.png" style="width: 25px; 
-  height: 25px; object-fit: scale-down;"/></button>
-      
-    </form>
-  </div>
-  
-  <script src="script.js"></script>-->
 
  <!--
   This script places a badge on your repl's full-browser view back to your repl's cover

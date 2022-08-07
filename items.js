@@ -4,6 +4,11 @@ including their different potential spellings, etc. and categorized by collectio
 /*An array containing (hopefully) all multi-sellable CSGO items:*/
 var items = [];
 
-for(let i=0; i<cases.length; i++){
-  items.push(cases[i]);
+pushToItems(cases); //add all items from cases.js
+pushToItems(antwerp22); //add all items from antwerp-2022.js
+
+function pushToItems(arr){
+  for(let i=0; i<arr.length; i++){
+    items.push(arr[i]);
+  }
 }

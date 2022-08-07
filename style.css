@@ -40,6 +40,15 @@ input[type=button] {
   cursor: pointer;
 }
 
+/*
+form a {
+  
+}*/
+
+form input[type=button] {
+  background-color: crimson;
+}
+
 .autocomplete-items {
   position: absolute;
   border: 1px solid #d4d4d4;
@@ -68,4 +77,25 @@ input[type=button] {
 .autocomplete-active {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
+}
+
+/*
+.items-list {
+  background-color:powderblue;
+}*/
+
+.item-bar {
+  position: relative;
+  display: table;
+  background-color: powderblue;
+  padding:10px;
+  
+}
+
+.cell{
+  display:table-cell;
+}
+
+.tar{
+  text-align:right;
 }

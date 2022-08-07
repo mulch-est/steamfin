@@ -21,24 +21,42 @@ function autocomplete(inp, arr) {
       this.parentNode.appendChild(a);
       /*for each item in the array...*/
       for (let i = 0; i < arr.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-          /*create a DIV element for each matching element:*/
-          let b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i].substr(val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
+        if(!inList(arr[i])){
+          var checkArr = autocompleteCheck(val, arr[i]);
+          if (checkArr[0]) {
+            /*create a DIV element for each matching element:*/
+            let b = document.createElement("DIV");
+            b.innerHTML = "<p>";
+            /*make the matching letters bold:*/
+            for(let j=0; j<arr[i].length; j++){
+              var wrote = -1;
+              for(let k=0; k<checkArr[1].length; k++){
+                //character must be bolded
+                if(arr[i][j] === checkArr[1][k]){
+                  b.innerHTML += "<b>" + arr[i][j] + "</b>";
+                  wrote = k;
+                  break;
+                }
+              }
+              if(wrote === -1){
+                b.innerHTML += arr[i][j];
+              }else checkArr[1].splice(wrote, 1);
+            }
+            b.innerHTML += "</p>";
+            //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            //b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+            b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
         }
       }
   });
@@ -92,6 +110,30 @@ function autocomplete(inp, arr) {
         x[i].parentNode.removeChild(x[i]);
       }
     }
+  }
+  function autocompleteCheck(entry, item){
+    /* check if every character in entry is in item */
+    var itemChars = item.split("");
+    var highlightChars = [];
+    //console.log("ac:"+item);
+    for(let i=0; i<entry.length; i++){
+      var wrote = false;
+      for(let j=0; j<itemChars.length; j++){
+        if(entry[i].toUpperCase() === itemChars[j].toUpperCase()){
+          highlightChars.push(itemChars[j]);
+          itemChars.splice(j, 1);
+          //console.log(j);
+          wrote = true;
+          break;
+        }
+      }
+      if(!wrote)return [false, []];
+    }
+    if(itemChars.length === item.length - entry.length){
+      //console.log(item + " passed given entry " + entry + ", ("+highlightChars+")");
+      return [true, highlightChars];
+    }
+    return [false, []];
   }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
