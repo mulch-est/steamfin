@@ -17,7 +17,7 @@ function attemptPush(){
 function pushToList(data){
   //add div to page
   var itemList = document.getElementById("itemsDiv");
-  itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><p>"+data+"</p></div>";
+  itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><b>"+data+"</b></div>";
   itemList.innerHTML += "<div class='cell tar'><input type='button' onclick='unlist(\""+data+"\")' value='&#10005;' /></div><br>";
 }
 
