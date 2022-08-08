@@ -81,7 +81,7 @@ form input[type=button] {
 
 .item-bar {
   position: relative;
-  display: table;
+  /*display: table;*/
   background-color: powderblue;
   padding:10px;
   white-space:nowrap;
@@ -90,7 +90,7 @@ form input[type=button] {
   /*text-overflow:clip;*/
 }
 
-.item-bar > p{
+.item-bar > b{
   color:purple;
 }
 
