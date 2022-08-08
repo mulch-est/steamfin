@@ -6,6 +6,10 @@ var items = [];
 
 pushToItems(cases); //add all items from cases.js
 pushToItems(antwerp22); //add all items from antwerp-2022.js
+pushToItems(comm21);
+pushToItems(stockholm21);
+pushToItems(rmr20);
+pushToItems(berlin19);
 
 function pushToItems(arr){
   for(let i=0; i<arr.length; i++){

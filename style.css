@@ -40,11 +40,6 @@ input[type=button] {
   cursor: pointer;
 }
 
-/*
-form a {
-  
-}*/
-
 form input[type=button] {
   background-color: crimson;
 }
@@ -86,10 +81,17 @@ form input[type=button] {
 
 .item-bar {
   position: relative;
-  display: table;
+  /*display: table;*/
   background-color: powderblue;
   padding:10px;
-  
+  white-space:nowrap;
+  max-width:300px;
+  overflow:hidden;
+  /*text-overflow:clip;*/
+}
+
+.item-bar > b{
+  color:purple;
 }
 
 .cell{
