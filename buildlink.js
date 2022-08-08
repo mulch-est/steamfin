@@ -22,6 +22,8 @@ function linkVersionOf(item){
       fin += "%28";
     }else if(item.charAt(i) == ")"){
       fin += "%29";
+    }else if(item.charAt(i) == "/"){
+      fin += "-";
     }else if(item.charAt(i) == "&"){
       fin += "%26";
     }else {
