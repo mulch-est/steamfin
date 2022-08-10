@@ -31,6 +31,9 @@ function linkVersionOf(item){
       case ":":
         fin += "%3A";
         break;
+      case "+":
+        fin += "%2B";
+        break;
       case "&":
         fin += "%26";
         break;
