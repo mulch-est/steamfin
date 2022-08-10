@@ -153,7 +153,7 @@ function autocomplete(inp, arr) {
       if (c.checked){
         /* check dropdown to see which stickers pass filter */
         var d = document.getElementById('stickerCollectionsDropdown');
-        if (d.value === 0) return true;
+        if (d.value === "0") return true;
         if (isValidArrVal(arr, d.value))return true;
         return false;
       }
