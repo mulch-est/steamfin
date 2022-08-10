@@ -19,43 +19,45 @@ function autocomplete(inp, arr) {
       a.setAttribute("class", "autocomplete-items");
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (let i = 0; i < arr.length; i++) {
-        if(!inList(arr[i])){
-          var checkArr = autocompleteCheck(val, arr[i]);
-          if (checkArr[0]) {
-            /*create a DIV element for each matching element:*/
-            let b = document.createElement("DIV");
-            b.innerHTML = "<p>";
-            /*make the matching letters bold:*/
-            for(let j=0; j<arr[i].length; j++){
-              var wrote = -1;
-              for(let k=0; k<checkArr[1].length; k++){
-                //character must be bolded
-                if(arr[i][j] === checkArr[1][k]){
-                  b.innerHTML += "<b>" + arr[i][j] + "</b>";
-                  wrote = k;
-                  break;
+      /*for each item in the array in the array...*/
+      for(let db = 0; db < arr.length; db++){
+        if(passesFilter(arr[db])){
+          for (let i = 0; i < arr[db].length; i++) {
+            if(!inList(arr[db][i])){
+              var checkArr = autocompleteCheck(val, arr[db][i]);
+              if (checkArr[0]) {
+                /*create a DIV element for each matching element:*/
+                let b = document.createElement("DIV");
+                b.innerHTML = "<p>";
+                /*make the matching letters bold:*/
+                for(let j=0; j<arr[db][i].length; j++){
+                  var wrote = -1;
+                  for(let k=0; k<checkArr[1].length; k++){
+                    //character must be bolded
+                    if(arr[db][i][j] === checkArr[1][k]){
+                      b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
+                      wrote = k;
+                      break;
+                    }
+                  }
+                  if(wrote === -1){
+                    b.innerHTML += arr[db][i][j];
+                  }else checkArr[1].splice(wrote, 1);
                 }
+                b.innerHTML += "</p>";
+                /*insert a input field that will hold the current array item's value:*/
+                b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
+                /*execute when someone clicks on the item value (DIV element):*/
+                b.addEventListener("click", function(e) {
+                    /*insert the value for the autocomplete text field:*/
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    /*close the list of autocompleted values,
+                    (or any other open lists of autocompleted values:*/
+                    closeAllLists();
+                });
+                a.appendChild(b);
               }
-              if(wrote === -1){
-                b.innerHTML += arr[i][j];
-              }else checkArr[1].splice(wrote, 1);
             }
-            b.innerHTML += "</p>";
-            //b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-            //b.innerHTML += arr[i].substr(val.length);
-            /*insert a input field that will hold the current array item's value:*/
-            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-            /*execute a function when someone clicks on the item value (DIV element):*/
-            b.addEventListener("click", function(e) {
-                /*insert the value for the autocomplete text field:*/
-                inp.value = this.getElementsByTagName("input")[0].value;
-                /*close the list of autocompleted values,
-                (or any other open lists of autocompleted values:*/
-                closeAllLists();
-            });
-            a.appendChild(b);
           }
         }
       }
@@ -134,6 +136,29 @@ function autocomplete(inp, arr) {
       return [true, highlightChars];
     }
     return [false, []];
+  }
+  /* check if arr can pass depending on checkbox filters */
+  function passesFilter(arr){
+    if(arr === cases){
+      var c = document.getElementById('casesCheckbox');
+      if (c.checked) return true;
+      return false;
+    }else if(arr === capsules){
+      var c = document.getElementById('capsulesCheckbox');
+      if (c.checked) return true;
+      return false;
+    }else{
+      /* not case or capsule array, must be sticker array (keys not implemented) */
+      var c = document.getElementById('stickersCheckbox');
+      if (c.checked){
+        /* check dropdown to see which stickers pass filter */
+        var d = document.getElementById('stickerCollectionsDropdown');
+        if (d.value === "0") return true;
+        if (isValidArrVal(arr, d.value))return true;
+        return false;
+      }
+      return false;
+    }
   }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
