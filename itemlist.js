@@ -47,12 +47,17 @@ function refreshList(){
 
 //checks whether an element in items (items.js) is equal to <data> and not in list
 function isValidItem(data){
-  for(let i=0; i<items.length; i++){
-    if(data === items[i]){
-      for(let j=0; j<list.length; j++){
-        if(data === list[j])return false;
+  //array of arrays
+  for(let db=0; db<items.length; db++){
+    //array (case, capsules, rmr20)
+    for(let i=0; i<items[db].length; i++){
+      if(data === items[db][i]){
+        //data in items, check if not in list also
+        for(let j=0; j<list.length; j++){
+          if(data === list[j])return false;
+        }
+        return true;
       }
-      return true;
     }
   }
   return false;
