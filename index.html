@@ -12,25 +12,57 @@
   <p style="color:red;">Warning! Adding too many items to the list may cause Steam to refuse your request!</p>
   <!--Make sure the form has the autocomplete function switched off:-->
   <form autocomplete="off" action="javascript:attemptPush()">
-    <div class="autocomplete" style="width:300px;">
-      <input id="searchAuto" type="text" placeholder="Item">
-    </div>
-    <input type="submit" value="Add">
+    <table>
+      <tr>
+        <div class="autocomplete" style="width:300px;">
+          <input id="searchAuto" type="text" placeholder="Item">
+        </div>
+        <input type="submit" value="Add">
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td>
+          <input type="checkbox" id="casesCheckbox" checked="checked">
+          <label class="check-label">Cases</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="checkbox" id="capsulesCheckbox">
+          <label class="check-label">Capsules</label>
+        </td>
+        <td>
+          <input type="checkbox" id="stickersCheckbox">
+          <label for="sticker-collections" class="check-label">Stickers</label>
+
+          <select name="sticker-collections" id="stickerCollectionsDropdown">
+            <option value="0" selected="selected">All Stickers</option>
+          </select>
+        </td>
+      </tr>
+    </table>
   
     <h3>Items</h3>
-    <div id="itemsDiv" class="items-list">
-      <!-- list will be generated here -->
-    </div>
+    <table>
+      <thead></thead>
+      <tbody id="itemDisplay" class="items-list">
+        <!-- list will be generated here -->
+      </tbody>
+    </table>
   </form>
 
   <input type="button" onclick="getLink()" value="Go" />
 
   <script src="itemDB/cases.js"></script>
+  <script src="itemDB/capsules.js"></script>
   <script src="itemDB/major/antwerp-2022.js"></script>
   <script src="itemDB/major/stockholm-2021.js"></script>
   <script src="itemDB/capsule/community-2021.js"></script>
   <script src="itemDB/major/rmr-2020.js"></script>
   <script src="itemDB/major/berlin-2019.js"></script>
+  <script src="itemDB/operation/broken-fang.js"></script>
   <script src="items.js"></script>
   
   <script src="autocomplete.js"></script>
