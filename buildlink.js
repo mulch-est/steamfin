@@ -12,22 +12,33 @@ function getLink(){
 function linkVersionOf(item){
   var fin = "";
   for(let i=0; i<item.length; i++){
-    if(item.charAt(i) == " "){
-      fin += "%20";
-    }else if(item.charAt(i) == ":"){
-      fin += "%3A";
-    }else if(item.charAt(i) == "|"){
-      fin += "%7C";
-    }else if(item.charAt(i) == "("){
-      fin += "%28";
-    }else if(item.charAt(i) == ")"){
-      fin += "%29";
-    }else if(item.charAt(i) == "/"){
-      fin += "-";
-    }else if(item.charAt(i) == "&"){
-      fin += "%26";
-    }else {
-      fin += item.charAt(i);
+    switch(item.charAt(i)){
+      case " ":
+        fin += "%20";
+        break;
+      case "|":
+        fin += "%7C";
+        break;
+      case "(":
+        fin += "%28";
+        break;
+      case ")":
+        fin += "%29";
+        break;
+      case "/":
+        fin += "-";
+        break;
+      case ":":
+        fin += "%3A";
+        break;
+      case "&":
+        fin += "%26";
+        break;
+      case ",":
+        fin += "%2C";
+        break;
+      default:
+        fin += item.charAt(i);
     }
   }
   return fin;
