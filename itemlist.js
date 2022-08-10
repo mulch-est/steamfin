@@ -16,9 +16,8 @@ function attemptPush(){
 
 function pushToList(data){
   //add div to page
-  var itemList = document.getElementById("itemsDiv");
-  itemList.innerHTML += "<div class='cell item-bar' style='width:300px;'><b>"+data+"</b></div>";
-  itemList.innerHTML += "<div class='cell tar'><input type='button' onclick='unlist(\""+data+"\")' value='&#10005;' /></div><br>";
+  var itemList = document.getElementById("itemDisplay");
+  itemList.innerHTML += "<tr><td class='item-bar'><div style='width:300px;'><b>"+data+"</b></div></td><td><div><input type='button' onclick='unlist(\""+data+"\")' value='&#10005;' /></div></td></tr><br>";
 }
 
 /* called by x button, passed string item name */
@@ -38,7 +37,7 @@ function unlist(item){
 //refreshes item list ui to display contents in list
 function refreshList(){
   //reset item list div
-  var itemList = document.getElementById("itemsDiv");
+  var itemList = document.getElementById("itemDisplay");
   itemList.innerHTML = "";
   //push each element in list
   for(let i=0; i<list.length; i++){
