@@ -81,7 +81,6 @@ form input[type=button] {
 
 .item-bar {
   position: relative;
-  /*display: table;*/
   background-color: powderblue;
   padding:10px;
   white-space:nowrap;
@@ -90,14 +89,19 @@ form input[type=button] {
   /*text-overflow:clip;*/
 }
 
-.item-bar > b{
+.item-bar > div > b{
   color:purple;
+  padding-left:2px;
 }
 
-.cell{
-  display:table-cell;
+table{
+  border-collapse: collapse;
+}
+tr, td {
+  padding: 0px;
+  margin: 0px;
 }
 
-.tar{
-  text-align:right;
+.check-label{
+  font-size:12px;
 }
