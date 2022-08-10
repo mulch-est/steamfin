@@ -23,30 +23,30 @@ function autocomplete(inp, arr) {
       for(let db = 0; db < arr.length; db++){
         if(passesFilter(arr[db])){
           for (let i = 0; i < arr[db].length; i++) {
-            if(!inList(arr[i])){
-              var checkArr = autocompleteCheck(val, arr[i]);
+            if(!inList(arr[db][i])){
+              var checkArr = autocompleteCheck(val, arr[db][i]);
               if (checkArr[0]) {
                 /*create a DIV element for each matching element:*/
                 let b = document.createElement("DIV");
                 b.innerHTML = "<p>";
                 /*make the matching letters bold:*/
-                for(let j=0; j<arr[i].length; j++){
+                for(let j=0; j<arr[db][i].length; j++){
                   var wrote = -1;
                   for(let k=0; k<checkArr[1].length; k++){
                     //character must be bolded
-                    if(arr[i][j] === checkArr[1][k]){
-                      b.innerHTML += "<b>" + arr[i][j] + "</b>";
+                    if(arr[db][i][j] === checkArr[1][k]){
+                      b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
                       wrote = k;
                       break;
                     }
                   }
                   if(wrote === -1){
-                    b.innerHTML += arr[i][j];
+                    b.innerHTML += arr[db][i][j];
                   }else checkArr[1].splice(wrote, 1);
                 }
                 b.innerHTML += "</p>";
                 /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
                 /*execute when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function(e) {
                     /*insert the value for the autocomplete text field:*/
