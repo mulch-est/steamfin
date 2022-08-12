@@ -8,6 +8,7 @@ function autocomplete(inp, arr) {
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
+    if(!expertOn){
       let val = this.value;
       /*close any already open lists of autocompleted values*/
       closeAllLists();
@@ -61,6 +62,7 @@ function autocomplete(inp, arr) {
           }
         }
       }
+    }
   });
   /*execute a function presses a key on the keyboard:*/
   inp.addEventListener("keydown", function(e) {
