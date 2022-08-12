@@ -14,38 +14,49 @@
   <form autocomplete="off" action="javascript:attemptPush()">
     <table>
       <tr>
-        <div class="autocomplete" style="width:300px;">
-          <input id="searchAuto" type="text" placeholder="Item">
-        </div>
-        <input type="submit" value="Add">
+        <td>
+          <div class="autocomplete" style="width:300px;">
+            <input id="searchAuto" type="text" placeholder="Item">
+          </div>
+        </td>
+        <td>
+          <input type="submit" value="Add">
+        </td>
+        <td>
+          <input type="checkbox" id="expertCheckbox" onclick="onExpertClick()">
+          <label class="check-label" style="color:red;">Expert Mode</label>
+        </td>
       </tr>
     </table>
 
     <table>
-      <tr>
-        <td>
-          <input type="checkbox" id="casesCheckbox" checked="checked">
-          <label class="check-label">Cases</label>
-        </td>
-        <td>
-          <input type="checkbox" id="passesCheckbox">
-          <label class="check-label">Passes</label>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input type="checkbox" id="capsulesCheckbox">
-          <label class="check-label">Capsules</label>
-        </td>
-        <td>
-          <input type="checkbox" id="stickersCheckbox">
-          <label for="sticker-collections" class="check-label">Stickers</label>
-
-          <select name="sticker-collections" id="stickerCollectionsDropdown">
-            <option value="0" selected="selected">All Stickers</option>
-          </select>
-        </td>
-      </tr>
+      <thead></thead>
+      <tbody id="filterDisplay">
+        <tr>
+          <td>
+            <input type="checkbox" id="casesCheckbox" checked="checked">
+            <label class="check-label">Cases</label>
+          </td>
+          <td>
+            <input type="checkbox" id="passesCheckbox">
+            <label class="check-label">Passes</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="checkbox" id="capsulesCheckbox">
+            <label class="check-label">Capsules</label>
+          </td>
+          <td>
+            <input type="checkbox" id="stickersCheckbox">
+            <label for="sticker-collections" class="check-label">Stickers</label>
+  
+            <select name="sticker-collections" id="stickerCollectionsDropdown">
+              <option value="0" selected="selected">All Stickers</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
     </table>
   
     <h3>Items</h3>
@@ -71,7 +82,8 @@
   <script src="itemDB/operation/broken-fang.js"></script>
   
   <script src="items.js"></script>
-  
+
+  <script src="expert.js"></script>
   <script src="autocomplete.js"></script>
   <script src="itemlist.js"></script>
   <script src="buildlink.js"></script>
