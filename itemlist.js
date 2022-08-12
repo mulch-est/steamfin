@@ -5,7 +5,7 @@ function attemptPush(){
   //get data from searchAuto
   let data = document.getElementById("searchAuto").value;
   //check if data represents valid item
-  if(isValidItem(data)){
+  if(expertOn || isValidItem(data)){
     //push item to list
     list.push(data);
     pushToList(data);
