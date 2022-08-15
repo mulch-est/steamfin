@@ -9,84 +9,45 @@
 </head>
 
 <body>
-  <p style="color:red;">Warning! Adding too many items to the list may cause Steam to refuse your request!</p>
-  <!--Make sure the form has the autocomplete function switched off:-->
-  <form autocomplete="off" action="javascript:attemptPush()">
+  <!-- navigation header -->
+  <table>
+    <tr>
+      <td>
+        <a href="multisell.html">Multisell</a>&nbsp;&nbsp;
+      </td>
+      <td>
+        <a href="index.html">Rate my Craft</a>
+      </td>
+    </tr>
+  </table>
+  <!-- navigation header end -->
+  
+  <p>Enter your !ws gen-code below</p>
+  <form autocomplete="off" action="javascript:attemptRate()">
     <table>
       <tr>
         <td>
-          <div class="autocomplete" style="width:300px;">
-            <input id="searchAuto" type="text" placeholder="Item">
+          <div style="width:400px;">
+            <input id="gencodeInput" type="text" placeholder="!gen 7 801 0 0.01 0 0 0 0 0 0 0 0">
           </div>
         </td>
         <td>
-          <input type="submit" value="Add">
-        </td>
-        <td>
-          <input type="checkbox" id="expertCheckbox" onclick="onExpertClick()">
-          <label class="check-label" style="color:red;">Expert Mode</label>
+          <input type="submit" value="Rate">
         </td>
       </tr>
     </table>
-
-    <table>
-      <thead></thead>
-      <tbody id="filterDisplay">
-        <tr>
-          <td>
-            <input type="checkbox" id="casesCheckbox" checked="checked">
-            <label class="check-label">Cases</label>
-          </td>
-          <td>
-            <input type="checkbox" id="passesCheckbox">
-            <label class="check-label">Passes</label>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" id="capsulesCheckbox">
-            <label class="check-label">Capsules</label>
-          </td>
-          <td>
-            <input type="checkbox" id="stickersCheckbox">
-            <label for="sticker-collections" class="check-label">Stickers</label>
-  
-            <select name="sticker-collections" id="stickerCollectionsDropdown">
-              <option value="0" selected="selected">All Stickers</option>
-            </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <h3>Items</h3>
-    <table>
-      <thead></thead>
-      <tbody id="itemDisplay" class="items-list">
-        <!-- list will be generated here -->
-      </tbody>
-    </table>
   </form>
 
-  <input type="button" onclick="getLink()" value="Go" />
+  <p class="bar" id="ratingBar"></p>
 
-  <script src="itemDB/cases.js"></script>
-  <script src="itemDB/capsules.js"></script>
-  <script src="itemDB/passes.js"></script>
-  
-  <script src="itemDB/major/antwerp-2022.js"></script>
-  <script src="itemDB/major/stockholm-2021.js"></script>
-  <script src="itemDB/capsule/community-2021.js"></script>
-  <script src="itemDB/major/rmr-2020.js"></script>
-  <script src="itemDB/major/berlin-2019.js"></script>
-  <script src="itemDB/operation/broken-fang.js"></script>
-  
-  <script src="items.js"></script>
+  <table>
+    <thead></thead>
+    <tbody id="reasonDisplay" class="items-list">
+      <!-- list will be generated here -->
+    </tbody>
+  </table>
 
-  <script src="expert.js"></script>
-  <script src="autocomplete.js"></script>
-  <script src="itemlist.js"></script>
-  <script src="buildlink.js"></script>
+  <script src="rate-craft.js"></script>
 
  <!--
   This script places a badge on your repl's full-browser view back to your repl's cover
