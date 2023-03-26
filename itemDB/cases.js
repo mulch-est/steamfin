@@ -1,4 +1,5 @@
-var cases = ["Recoil Case",
+var cases = ["Revolution Case",
+             "Recoil Case",
              "Dreams & Nightmares Case",
              "Operation Riptide Case",
              "Snakebite Case",
