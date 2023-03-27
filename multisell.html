@@ -100,20 +100,16 @@
   <script src="itemDB/major/berlin-2019.js"></script>
   <script src="itemDB/operation/broken-fang.js"></script>
   
-  <script src="items.js"></script>
+  <script src="multisell/items.js"></script>
 
-  <script src="expert.js"></script>
-  <script src="autocomplete.js"></script>
-  <script src="itemlist.js"></script>
-  <script src="buildlink.js"></script>
-
- <!--
-  This script places a badge on your repl's full-browser view back to your repl's cover
-  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-  teal, blue, blurple, magenta, pink!
-  
-  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
-  -->
+  <script src="multisell/expert.js"></script>
+  <script src="multisell/filters.js"></script>
+  <script src="multisell/autocomplete.js"></script>
+  <script>
+    autocomplete(document.getElementById("searchAuto"), items);
+  </script>
+  <script src="multisell/itemlist.js"></script>
+  <script src="multisell/buildlink.js"></script>
 </body>
 
 </html>

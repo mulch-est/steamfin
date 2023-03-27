@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="multisell.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -22,25 +23,44 @@
   </table>
   <!-- navigation header end -->
   <center id="head">steamfin</center>
-  <div id="portfolio-head">
-    <span style="text-align:left; padding: .8em;">Current Investments:</span>
-    <span style="text-align:right;"><button id="invest-button">Add</button></span>
-  </div>
-  <div id="portfolio"></div>
-  <div id="portfolio-entry">
-    <input type="text" id="entry-name">
-    <span>
-      x
-      <input type="number" id="entry-qty" min="0">
-    </span>
-    <span>
-      $
-      <input type="number" id="entry-dollars" min="0">
-      .
-      <input type="number" id="entry-cents" min="0" max="99">
-    </span>
+  <div id="body">
+    <div id="portfolio-head">
+      <span style="text-align:left; padding: .8em;">Current Investments:</span>
+      <span style="text-align:right;"><button id="invest-button" onclick="addInvestment()">Add</button></span>
+    </div>
+    <div id="portfolio"></div>
+    <div id="portfolio-entry" class="hide">
+      <div class="autocomplete" style="width:300px;">
+        <input id="searchAuto" type="text" placeholder="Item" autocomplete="off" onkeydown="submitEntry(false)">
+      </div>
+      <span>
+        x
+        <input type="number" id="entry-qty" min="0" value="0" onkeydown="submitEntry(false)">
+      </span>
+      <!-- can add oninput to slice off extra numbers -->
+      <span>
+        $
+        <input type="number" id="entry-dollars" min="0" value="0" onkeydown="submitEntry(false)">
+        .
+        <input type="number" id="entry-cents" min="0" max="99" value="0" onkeydown="submitEntry(false)">
+      </span>
+      <span>
+        <button id="entry-accept" onclick="submitEntry(true)">&#x2713;</button>
+        <button id="entry-cancel" onclick="submitCancel()">&#x2716;</button>
+      </span>
+    </div>
   </div>
   <script src="portfolio/investments.js"></script>
+  <script src="itemDB/cases.js"></script>
+  <script>
+    let expertOn = false;
+    function passesFilter(arr){return true;}
+    function inList(item){return false;}
+  </script>
+  <script src="multisell/autocomplete.js"></script>
+  <script>
+    autocomplete(document.getElementById("searchAuto"), [cases]);
+  </script>
 </body>
 
 </html>

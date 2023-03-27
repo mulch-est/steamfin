@@ -57,12 +57,16 @@
 }
 
 #portfolio-entry {
+  visibility: visible;
   background-color: lightgray;
   color: black;
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   grid-template-rows: auto;
-  gap: 4px;
+  padding: .8em;
+}
+#portfolio-entry.hide {
+  visibility: hidden;
 }
 #entry-name {
   
@@ -76,17 +80,40 @@
 #entry-cents {
   width: 3em;
 }
+#entry-accept {
+  background-color: #33cc33;
+  border-width: 0px;
+  cursor: pointer;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  font-size: 1.5em;
+}
+#entry-cancel {
+  background-color: #cc3333;
+  border-width: 0px;
+  cursor: pointer;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  font-size: 1.5em;
+}
 
 #head {
   font-size: 3em;
   font-family: "Trebuchet MS", sans-serif;
 }
+#body {
+  position: relative;
+  left: calc(50% - 360px);
+  width: 720px;
+}
 
-html, body {
-  height: 100%;
-  width: 100%;
-  padding: 4px;
-  margin: 0px;
-  font: 16px Arial;
-  box-sizing: border-box;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

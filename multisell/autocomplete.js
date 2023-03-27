@@ -1,7 +1,12 @@
+/*
+  requires boolean var expertOn,
+  boolean func passesFilter(arr),
+  boolean func inList(item)
+*/
 //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete
 /*
   the autocomplete function takes two arguments:
-    the text field element (str)
+    the text field HTMLelement
     and an array of possible autocompleted values (str[])
 */
 function autocomplete(inp, arr) {
@@ -139,39 +144,8 @@ function autocomplete(inp, arr) {
     }
     return [false, []];
   }
-  /* check if arr can pass depending on checkbox filters */
-  function passesFilter(arr){
-    switch(arr){
-      case cases:
-        var c = document.getElementById('casesCheckbox');
-        if (c.checked) return true;
-        return false;
-      case capsules:
-        var c = document.getElementById('capsulesCheckbox');
-        if (c.checked) return true;
-        return false;
-      case passes:
-        var c = document.getElementById('passesCheckbox');
-        if (c.checked) return true;
-        return false;
-      default:
-        /* not case or capsule array, must be sticker array (keys not implemented) */
-        var c = document.getElementById('stickersCheckbox');
-        if (c.checked){
-          /* check dropdown to see which stickers pass filter */
-          var d = document.getElementById('stickerCollectionsDropdown');
-          if (d.value === "0") return true;
-          if (isValidArrVal(arr, d.value))return true;
-          return false;
-        }
-        return false;
-    }
-  }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
 }
-
-/*initiate the autocomplete function on the "searchAuto" element, and pass along the items array as possible autocomplete values:*/
-autocomplete(document.getElementById("searchAuto"), items);
