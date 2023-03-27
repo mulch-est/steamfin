@@ -21,12 +21,25 @@
     </tr>
   </table>
   <!-- navigation header end -->
-  <center>steamfin</center>
+  <center id="head">steamfin</center>
   <div id="portfolio-head">
     <span style="text-align:left; padding: .8em;">Current Investments:</span>
     <span style="text-align:right;"><button id="invest-button">Add</button></span>
   </div>
   <div id="portfolio"></div>
+  <div id="portfolio-entry">
+    <input type="text" id="entry-name">
+    <span>
+      x
+      <input type="number" id="entry-qty" min="0">
+    </span>
+    <span>
+      $
+      <input type="number" id="entry-dollars" min="0">
+      .
+      <input type="number" id="entry-cents" min="0" max="99">
+    </span>
+  </div>
   <script src="portfolio/investments.js"></script>
 </body>
 
