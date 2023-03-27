@@ -1,107 +1,35 @@
-/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete */
+#invest-button {
+  background-color: dodgerblue;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-width: 0px;
+  height: 100%;
+  padding: .8em;
+}
+#portfolio-head {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  background-color: #eeeeee;
+}
+#portfolio {
+  background-color: lightgray;
+  color: black;
+  margin-top: 12px;
+  min-height: 4px;
+}
+
+center {
+  font-size: 3em;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
 html, body {
   height: 100%;
   width: 100%;
-  font: 16px Arial;
-}
-
-
-* {
-  box-sizing: border-box;
-}
-
-/*the container must be positioned relative:*/
-.autocomplete {
-  position: relative;
-  display: inline-block;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 100%;
-}
-
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-  cursor: pointer;
-}
-
-input[type=button] {
-  background-color: deepskyblue;
-  color: #fff;
-  cursor: pointer;
-}
-
-form input[type=button] {
-  background-color: crimson;
-}
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #e9e9e9; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
-}
-
-/*
-.items-list {
-  background-color:powderblue;
-}*/
-
-.item-bar {
-  position: relative;
-  background-color: powderblue;
-  padding:10px;
-  white-space:nowrap;
-  max-width:300px;
-  overflow:hidden;
-  /*text-overflow:clip;*/
-}
-
-.item-bar > div > b{
-  color:purple;
-  padding-left:2px;
-}
-
-table{
-  border-collapse: collapse;
-}
-tr, td {
-  padding: 0px;
+  padding: 4px;
   margin: 0px;
-}
-
-.check-label{
-  font-size:12px;
+  font: 16px Arial;
+  box-sizing: border-box;
 }

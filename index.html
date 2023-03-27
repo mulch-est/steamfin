@@ -9,92 +9,25 @@
 </head>
 
 <body>
-  <p style="color:red;">Warning! Adding too many items to the list may cause Steam to refuse your request!</p>
-  <!--Make sure the form has the autocomplete function switched off:-->
-  <form autocomplete="off" action="javascript:attemptPush()">
-    <table>
-      <tr>
-        <td>
-          <div class="autocomplete" style="width:300px;">
-            <input id="searchAuto" type="text" placeholder="Item">
-          </div>
-        </td>
-        <td>
-          <input type="submit" value="Add">
-        </td>
-        <td>
-          <input type="checkbox" id="expertCheckbox" onclick="onExpertClick()">
-          <label class="check-label" style="color:red;">Expert Mode</label>
-        </td>
-      </tr>
-    </table>
-
-    <table>
-      <thead></thead>
-      <tbody id="filterDisplay">
-        <tr>
-          <td>
-            <input type="checkbox" id="casesCheckbox" checked="checked">
-            <label class="check-label">Cases</label>
-          </td>
-          <td>
-            <input type="checkbox" id="passesCheckbox">
-            <label class="check-label">Passes</label>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="checkbox" id="capsulesCheckbox">
-            <label class="check-label">Capsules</label>
-          </td>
-          <td>
-            <input type="checkbox" id="stickersCheckbox">
-            <label for="sticker-collections" class="check-label">Stickers</label>
-  
-            <select name="sticker-collections" id="stickerCollectionsDropdown">
-              <option value="0" selected="selected">All Stickers</option>
-            </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <h3>Items</h3>
-    <table>
-      <thead></thead>
-      <tbody id="itemDisplay" class="items-list">
-        <!-- list will be generated here -->
-      </tbody>
-    </table>
-  </form>
-
-  <input type="button" onclick="getLink()" value="Go" />
-
-  <script src="itemDB/cases.js"></script>
-  <script src="itemDB/capsules.js"></script>
-  <script src="itemDB/passes.js"></script>
-  
-  <script src="itemDB/major/antwerp-2022.js"></script>
-  <script src="itemDB/major/stockholm-2021.js"></script>
-  <script src="itemDB/capsule/community-2021.js"></script>
-  <script src="itemDB/major/rmr-2020.js"></script>
-  <script src="itemDB/major/berlin-2019.js"></script>
-  <script src="itemDB/operation/broken-fang.js"></script>
-  
-  <script src="items.js"></script>
-
-  <script src="expert.js"></script>
-  <script src="autocomplete.js"></script>
-  <script src="itemlist.js"></script>
-  <script src="buildlink.js"></script>
-
- <!--
-  This script places a badge on your repl's full-browser view back to your repl's cover
-  page. Try various colors for the theme: dark, light, red, orange, yellow, lime, green,
-  teal, blue, blurple, magenta, pink!
-  
-  <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
-  -->
+  <!-- navigation header -->
+  <table>
+    <tr>
+      <td>
+        <a href="multisell.html">Multisell</a>&nbsp;&nbsp;
+      </td>
+      <td>
+        <a href="index.html">Home</a>
+      </td>
+    </tr>
+  </table>
+  <!-- navigation header end -->
+  <center>steamfin</center>
+  <div id="portfolio-head">
+    <span style="text-align:left; padding: .8em;">Current Investments:</span>
+    <span style="text-align:right;"><button id="invest-button">Add</button></span>
+  </div>
+  <div id="portfolio"></div>
+  <script src="portfolio/investments.js"></script>
 </body>
 
 </html>
