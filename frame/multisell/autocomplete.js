@@ -7,7 +7,7 @@
 /*
   the autocomplete function takes three arguments:
     the text field HTMLelement
-    and an array of possible autocompleted values (str[])
+    a 2d array of possible autocompleted values (str[])
     a callback function for when an autocomplete element is clicked
 */
 function autocomplete(inp, arr, myCallback) {
@@ -31,26 +31,20 @@ function autocomplete(inp, arr, myCallback) {
         if(passesFilter(arr[db])){
           for (let i = 0; i < arr[db].length; i++) {
             if(!inList(arr[db][i])){
-              var checkArr = autocompleteCheck(val, arr[db][i]);
+              var checkArr = autocompleteCheck(val.toUpperCase(), arr[db][i].toUpperCase());
               if (checkArr[0]) {
                 /*create a DIV element for each matching element:*/
                 let b = document.createElement("DIV");
                 b.innerHTML = "<p>";
-                /*make the matching letters bold:*/
-                for(let j=0; j<arr[db][i].length; j++){
-                  var wrote = -1;
-                  for(let k=0; k<checkArr[1].length; k++){
-                    //character must be bolded
-                    if(arr[db][i][j] === checkArr[1][k]){
-                      b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
-                      wrote = k;
-                      break;
-                    }
-                  }
-                  if(wrote === -1){
-                    b.innerHTML += arr[db][i][j];
-                  }else checkArr[1].splice(wrote, 1);
+                for(let j=0; j<checkArr[1]; j++){
+                  b.innerHTML += arr[db][i][j];
                 }
+                for(let j=checkArr[1]; j<checkArr[1] + val.length; j++){
+                  b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
+                }
+                for(let j=checkArr[1] + val.length; j<arr[db][i].length; j++){
+                  b.innerHTML += arr[db][i][j];
+                } 
                 b.innerHTML += "</p>";
                 /*insert a input field that will hold the current array item's value:*/
                 b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
@@ -123,28 +117,15 @@ function autocomplete(inp, arr, myCallback) {
     }
   }
   function autocompleteCheck(entry, item){
-    /* check if every character in entry is in item */
-    var itemChars = item.split("");
-    var highlightChars = [];
-    //console.log("ac:"+item);
-    for(let i=0; i<entry.length; i++){
-      var wrote = false;
-      for(let j=0; j<itemChars.length; j++){
-        if(entry[i].toUpperCase() === itemChars[j].toUpperCase()){
-          highlightChars.push(itemChars[j]);
-          itemChars.splice(j, 1);
-          //console.log(j);
-          wrote = true;
-          break;
+    /* check if item contains entry */
+    if(entry.length < item.length){
+      for(let i=0; i<item.length - entry.length; i++){
+        if(item.startsWith(entry, i)){
+          return [true, i];
         }
       }
-      if(!wrote)return [false, []];
     }
-    if(itemChars.length === item.length - entry.length){
-      //console.log(item + " passed given entry " + entry + ", ("+highlightChars+")");
-      return [true, highlightChars];
-    }
-    return [false, []];
+    return [false, -1];
   }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {

@@ -1,11 +1,11 @@
 //called on Go clicked, gets multisell link and redirects
-function getLink(){
+function getLink(arr){
   var link = "https://steamcommunity.com/market/multisell?appid=730&contextid=2";
-  for(let i=0; i<list.length; i++){
+  for(let i=0; i<arr.length; i++){
     link += "&items%5B%5D=";
-    link += linkVersionOf(list[i]);
+    link += linkVersionOf(arr[i]);
   }
-  location.href = link;
+  return link;
 }
 
 //given normal item name, get steam link version

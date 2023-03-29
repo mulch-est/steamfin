@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<!-- add funds feature later? -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Steamfin</title>
+  <link href="/frame/style.css" rel="stylesheet" type="text/css" />
+  <link href="/frame/multisell.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="body">
+    <div id="portfolio-head">
+      <span style="text-align:left; padding: .8em;">0 investments making 0 USD</span>
+      <span style="text-align:right;"><button id="invest-button">Add</button></span>
+    </div>
+    <div id="portfolio"></div>
+    <div id="portfolio-entry" class="hide">
+      <div class="autocomplete" style="width:300px;">
+        <input id="searchAuto" type="text" placeholder="Item" autocomplete="off">
+      </div>
+      <div>
+        <span>
+          x
+          <input type="number" id="entry-qty" min="0" value="0">
+        </span>
+        <!-- can add oninput to slice off extra numbers -->
+        <span>
+          each $
+          <input type="number" id="entry-dollars" min="0" value="0">
+          .
+          <input type="number" id="entry-cents" min="0" max="99" value="00">
+        </span>
+      </div>
+    </div>
+  </div>
+  <script src="/frame/portfolio/investments.js"></script>
+  <script src="/frame/portfolio/loadListeners.js"></script>
+  <script src="/frame/portfolio/items.js"></script>
+  <script src="/frame/multisell/autocomplete.js"></script>
+  <script src="/frame/portfolio/itemData.js"></script>
+  <script src="/scripts/injectScript.js"></script>
+</body>
+
+</html>

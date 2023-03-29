@@ -1,6 +1,7 @@
 let count = 0; //stores how many investments are being kept track of
 //#portfolio, check local storage for things
-function loadInvestments(){
+function loadInvestment(num){
+  //stored <name>,<quantity>,<total>
   let myItem = localStorage.getItem("investment0"); //stored <name>,<quantity>,<total>
   while(myItem !== null){
     let arr = myItem.split(",");
@@ -11,19 +12,27 @@ function loadInvestments(){
 }
 
 function addInvestment(){
-  document.getElementById("portfolio-entry").classList.toggle("hide");
+  if(document.getElementById("portfolio-entry").classList.toggle("hide")){
+    clearEntry();
+  }
   document.getElementById("searchAuto").focus();
+}
+
+function beautifyCurrency(invested){
+  let cents = invested % 100;
+  let dollars = (invested - cents) / 100;
+  return dollars + "." + cents + " USD";
 }
 
 function appendInvestment(name, qty, invested){
   let myInvestment = document.createElement("div");
   myInvestment.setAttribute("class", "investment");
-  
+  myInvestment.setAttribute("id", "investment" + count);
   let myLabel = document.createElement("div");
   myLabel.setAttribute("class", "investment-label");
   myLabel.innerHTML = "<span class='investment-title'>" + name + "</span>";
   myLabel.innerHTML += "<span class='investment-qty'>&emsp;x" + qty 
-    + " for a total " + invested + "</span>";
+    + " for " + beautifyCurrency(invested) + " each</span>";
   myInvestment.appendChild(myLabel);
   let percentChange = "+20%";
   let calculatedProfit = "+5.20 USD";
@@ -57,7 +66,8 @@ function submitEntry(override){
       clearEntry();
       appendInvestment(inputName, inputQty, inputValue);
       entryName.focus();
-    } else {
+      count ++;
+    } else { //warning strobe
       document.getElementById("portfolio-entry").style.backgroundColor="indianred";
       setTimeout(function(){
         document.getElementById("portfolio-entry").style.backgroundColor="lightgrey";
@@ -84,4 +94,4 @@ function clearEntry(){
   document.getElementById('entry-cents').value = 0;
 }
 
-loadInvestments();
+loadInvestment(0);
