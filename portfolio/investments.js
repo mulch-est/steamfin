@@ -12,6 +12,7 @@ function loadInvestments(){
 
 function addInvestment(){
   document.getElementById("portfolio-entry").classList.toggle("hide");
+  document.getElementById("searchAuto").focus();
 }
 
 function appendInvestment(name, qty, invested){
@@ -21,19 +22,22 @@ function appendInvestment(name, qty, invested){
   let myLabel = document.createElement("div");
   myLabel.setAttribute("class", "investment-label");
   myLabel.innerHTML = "<span class='investment-title'>" + name + "</span>";
-  myLabel.innerHTML += "<span class='investment-qty'>&emsp;x" + qty + "</span>";
+  myLabel.innerHTML += "<span class='investment-qty'>&emsp;x" + qty 
+    + " for a total " + invested + "</span>";
   myInvestment.appendChild(myLabel);
-  let percentChange = "20%";
-  let calculatedProfit = "+ $5.20";
+  let percentChange = "+20%";
+  let calculatedProfit = "+5.20 USD";
   let arrowIndicator = "&#x1f845;"; //down is &#x1f847;
   let investStatus = "profit"; //loss -- determines classes
-  let myInfo = document.createElement("center");
+  let myData = document.createElement("div");
+  myData.setAttribute("class", "investment-stats");
+  myData.innerHTML = "<span class='investment-data'>" + percentChange + "</span><br>";
+  myData.innerHTML += "<span class='investment-data'>" + calculatedProfit + "</span>";
+  let myInfo = document.createElement("div");
   myInfo.setAttribute("class", "investment-info " + investStatus);
-  myInfo.innerHTML = "<span class='investment-arrow'>" + arrowIndicator + "</span>";
-  myInfo.innerHTML += "<span class='investment-data'>" + percentChange + "</span>";
-  myInfo.innerHTML += "<span class='investment-data'>" + calculatedProfit + "</span>";
+  myInfo.appendChild(myData);
+  myInfo.innerHTML += "<span class='investment-arrow'>" + arrowIndicator + "</span>";
   myInvestment.appendChild(myInfo);
-  
   portfolio.appendChild(myInvestment);
 }
 
@@ -43,25 +47,34 @@ function submitEntry(override){
     let entryQty = document.getElementById('entry-qty');
     let entryDollars = document.getElementById('entry-dollars');
     let entryCents = document.getElementById('entry-cents');
-    if(entryName.value !== "" && 
+    if(isValidItem(entryName.value) && 
        entryQty.value > 0 && 
        (entryCents.value > 0 || entryDollars.value > 0)){
       let inputName = entryName.value;
       let inputQty = entryQty.value;
-      let inputValue = entryDollars.value * 100 + entryCents.value;
+      let inputValue = parseInt(entryDollars.value) * 100 + parseInt(entryCents.value);
       localStorage.setItem("investment" + count, inputName + "," + inputQty + "," + inputValue);
       clearEntry();
       appendInvestment(inputName, inputQty, inputValue);
       entryName.focus();
     } else {
-      //flash red background to indicate invalid input?
+      document.getElementById("portfolio-entry").style.backgroundColor="indianred";
+      setTimeout(function(){
+        document.getElementById("portfolio-entry").style.backgroundColor="lightgrey";
+      }, 300);
     }
+  } else if(event.key === 'Escape') {
+    submitCancel();
   }
 }
 
 function submitCancel(){
   clearEntry();
   document.getElementById("portfolio-entry").classList.toggle("hide");
+}
+
+function submitItem(elem){
+  document.getElementById("entry-qty").focus();
 }
 
 function clearEntry(){

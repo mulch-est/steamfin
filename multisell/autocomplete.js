@@ -5,11 +5,12 @@
 */
 //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete
 /*
-  the autocomplete function takes two arguments:
+  the autocomplete function takes three arguments:
     the text field HTMLelement
     and an array of possible autocompleted values (str[])
+    a callback function for when an autocomplete element is clicked
 */
-function autocomplete(inp, arr) {
+function autocomplete(inp, arr, myCallback) {
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
   inp.addEventListener("input", function(e) {
@@ -60,6 +61,7 @@ function autocomplete(inp, arr) {
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
+                    myCallback(b.innerText);
                 });
                 a.appendChild(b);
               }
