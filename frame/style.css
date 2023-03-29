@@ -1,3 +1,7 @@
+#head-data {
+  text-align:left;
+  padding: .8em;
+}
 #invest-button {
   background-color: dodgerblue;
   color: white;

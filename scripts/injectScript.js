@@ -1,7 +1,3 @@
-let myData = [];
-for(let i=0; i<count; i++){
-  myData.push(localStorage.getItem("investment" + i));
-}
 //execute script on the active tab if it is steam market
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   var currTab = tabs[0];
@@ -11,9 +7,8 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         tabId: currTab.id,
         allFrames: true,
       },
-      func: myFunc,
-      args: [myData]
-    }, parseResults);
+      files: ["/scripts/sampleInject.js"]
+    });
   } else {
     //write data as null
     for(let i=0; i<count; i++){
@@ -28,11 +23,20 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
   }
 });
 
-function parseResults(resultsArray){
-  console.log(resultsArray[0].result);
+chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
+  console.log(response);
+  document.getElementById("head-data").innerHTML = response;
+});
+/*
+let myData = [];
+for(let i=0; i<count; i++){
+  myData.push(localStorage.getItem("investment" + i).split(",")[0]);
 }
 
-function myFunc(data){
-  console.log(data);
-  return 4;
-}
+(async () => {
+  const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
+  const response = await chrome.tabs.sendMessage(tab.id, {request: myData});
+  // do something with response here, not outside the function
+  console.log(response);
+})();
+*/
