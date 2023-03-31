@@ -1,3 +1,5 @@
+import {addInvestment, submitEntry} from '/frame/portfolio/investments.js';
+
 document.getElementById("invest-button").addEventListener("click", addInvestment);
 let myInputs = ["searchAuto", "entry-qty", "entry-dollars", "entry-cents"];
 for(let i=0; i<myInputs.length; i++){

@@ -46,3 +46,5 @@ function linkVersionOf(item){
   }
   return fin;
 }
+
+export {linkVersionOf};

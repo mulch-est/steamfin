@@ -27,7 +27,12 @@
         </span>
         <!-- can add oninput to slice off extra numbers -->
         <span>
-          each $
+          ,&nbsp;
+		  <select id="entry-type" tabindex="-1">
+            <option>each</option>
+            <option>total</option>
+          </select>
+		  &nbsp;$
           <input type="number" id="entry-dollars" min="0" value="0">
           .
           <input type="number" id="entry-cents" min="0" max="99" value="00">
@@ -35,12 +40,12 @@
       </div>
     </div>
   </div>
-  <script src="/frame/portfolio/investments.js"></script>
-  <script src="/frame/portfolio/loadListeners.js"></script>
+  <script src="/frame/portfolio/investments.js" type="module"></script>
+  <script src="/frame/portfolio/loadListeners.js" type="module"></script>
   <script src="/frame/portfolio/items.js"></script>
   <script src="/frame/multisell/autocomplete.js"></script>
   <script src="/frame/portfolio/itemData.js"></script>
-  <script src="/scripts/injectScript.js"></script>
+  <script src="/scripts/injectScript.js" type="module"></script>
 </body>
 
 </html>

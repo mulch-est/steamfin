@@ -49,7 +49,7 @@
 }
 .investment-info {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto 48px;
   grid-template-rows: auto;
 }
 .profit {
@@ -60,6 +60,9 @@
 }
 .error {
   color: #eeee00;
+}
+.loading {
+  color: #cccccc;
 }
 .investment-arrow {
   font-size: 3em;

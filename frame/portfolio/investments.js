@@ -1,14 +1,24 @@
-let count = 0; //stores how many investments are being kept track of
+import {requestData} from '/scripts/injectScript.js';
+
+window.count = 0; //stores how many investments are being kept track of
+
 //#portfolio, check local storage for things
 function loadInvestment(num){
   //stored <name>,<quantity>,<total>
   let myItem = localStorage.getItem("investment0"); //stored <name>,<quantity>,<total>
   while(myItem !== null){
-    let arr = myItem.split(",");
-    appendInvestment(arr[0], parseInt(arr[1]), parseInt(arr[2]));
-    count ++;
-    myItem = localStorage.getItem("investment" + count);
+	let arr = myItem.split(",");
+	appendInvestment(arr[0], parseInt(arr[1]), parseInt(arr[2]));
+	count ++;
+	myItem = localStorage.getItem("investment" + count);
   }
+  let investmentsObj = {}; //{<name>: <nameid> or 'invalid',}
+  //<name>,<qty>,<invested>,<nameid>
+  for(let i=0; i<window.count; i++){
+    let arr = localStorage.getItem("investment" + i).split(",");
+    investmentsObj[arr[0]] = arr[3];
+  }
+  requestData(investmentsObj);
 }
 
 function addInvestment(){
@@ -28,24 +38,22 @@ function appendInvestment(name, qty, invested){
   let myInvestment = document.createElement("div");
   myInvestment.setAttribute("class", "investment");
   myInvestment.setAttribute("id", "investment" + count);
+  myInvestment.setAttribute("data-name", name);
   let myLabel = document.createElement("div");
   myLabel.setAttribute("class", "investment-label");
   myLabel.innerHTML = "<span class='investment-title'>" + name + "</span>";
   myLabel.innerHTML += "<span class='investment-qty'>&emsp;x" + qty 
-    + " for " + beautifyCurrency(invested) + " each</span>";
+    + " for " + beautifyCurrency(invested / qty) + " each</span>";
   myInvestment.appendChild(myLabel);
-  let percentChange = "+20%";
-  let calculatedProfit = "+5.20 USD";
-  let arrowIndicator = "&#x1f845;"; //down is &#x1f847;
-  let investStatus = "profit"; //loss -- determines classes
+  //will change dynamically
   let myData = document.createElement("div");
   myData.setAttribute("class", "investment-stats");
-  myData.innerHTML = "<span class='investment-data'>" + percentChange + "</span><br>";
-  myData.innerHTML += "<span class='investment-data'>" + calculatedProfit + "</span>";
+  myData.innerHTML = "<span class='investment-data'>--%</span><br>";
+  myData.innerHTML += "<span class='investment-data'>-- USD</span>";
   let myInfo = document.createElement("div");
-  myInfo.setAttribute("class", "investment-info " + investStatus);
+  myInfo.setAttribute("class", "investment-info loading");
   myInfo.appendChild(myData);
-  myInfo.innerHTML += "<span class='investment-arrow'>" + arrowIndicator + "</span>";
+  myInfo.innerHTML += "<span class='investment-arrow'>-</span>";
   myInvestment.appendChild(myInfo);
   portfolio.appendChild(myInvestment);
 }
@@ -60,13 +68,23 @@ function submitEntry(override){
        entryQty.value > 0 && 
        (entryCents.value > 0 || entryDollars.value > 0)){
       let inputName = entryName.value;
-      let inputQty = entryQty.value;
+      let inputQty = parseInt(entryQty.value);
       let inputValue = parseInt(entryDollars.value) * 100 + parseInt(entryCents.value);
-      localStorage.setItem("investment" + count, inputName + "," + inputQty + "," + inputValue);
+	  let inputType = document.getElementById('entry-type').selectedIndex;
+	  let investedValue = 0;
+	  if(inputType === 0){ //each
+		  investedValue = inputValue * inputQty;
+	  } else { //total
+		  investedValue = inputValue;
+	  }
+      localStorage.setItem("investment" + count, inputName + "," + inputQty + "," + investedValue + ",invalid");
       clearEntry();
-      appendInvestment(inputName, inputQty, inputValue);
+      appendInvestment(inputName, inputQty, investedValue);
       entryName.focus();
       count ++;
+	  let requestObj = {};
+	  requestObj[inputName] = 'invalid';
+	  requestData(requestObj);
     } else { //warning strobe
       document.getElementById("portfolio-entry").style.backgroundColor="indianred";
       setTimeout(function(){
@@ -83,10 +101,6 @@ function submitCancel(){
   document.getElementById("portfolio-entry").classList.toggle("hide");
 }
 
-function submitItem(elem){
-  document.getElementById("entry-qty").focus();
-}
-
 function clearEntry(){
   document.getElementById('searchAuto').value = "";
   document.getElementById('entry-qty').value = 0;
@@ -95,3 +109,5 @@ function clearEntry(){
 }
 
 loadInvestment(0);
+
+export {addInvestment, beautifyCurrency, submitEntry};
