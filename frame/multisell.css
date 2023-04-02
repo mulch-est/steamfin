@@ -1,15 +1,4 @@
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete */
-html, body {
-  height: 500px;
-  width: 416px;
-  padding: 4px;
-  margin: 0px;
-  font: 16px Arial;
-}
-
-body::-webkit-scrollbar {
-  display: none;
-}
 
 * {
   box-sizing: border-box;
@@ -66,6 +55,10 @@ form input[type=button] {
   cursor: pointer;
   background-color: #fff; 
   border-bottom: 1px solid #d4d4d4; 
+}
+
+.autocomplete-items div#first-match {
+  background-color: #aaddff;
 }
 
 /*when hovering an item:*/

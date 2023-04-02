@@ -86,6 +86,16 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
 			  }
 		  }
 		  console.log("retrieved id " + response[key][1] + " for " + response[key][0]);
+	  } else if(key === "newItemImg"){
+		  let investElem = document.querySelectorAll("[data-name='" + response[key][0] + "']")[0];
+		  let investImg = investElem.getElementsByClassName("investment-image")[0];
+		  investImg.setAttribute("src", response[key][1]);
+		  for(let i=0; i<window.count; i++){
+			  if(localStorage.getItem("investment" + i).split(",")[0] === response[key][0]){
+				  localStorage.setItem("investment" + i + "_image", response[key][1]);
+			  }
+		  }
+		  console.log("retrieved img " + response[key][1] + " for " + response[key][0]);
 	  } else {
 		  console.warn("received unknown message: " + key);
 	  }

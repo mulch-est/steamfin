@@ -6,17 +6,24 @@ window.count = 0; //stores how many investments are being kept track of
 function loadInvestment(num){
   //stored <name>,<quantity>,<total>
   let myItem = localStorage.getItem("investment0"); //stored <name>,<quantity>,<total>
+  let mySrc = localStorage.getItem("investment0_image");
   while(myItem !== null){
 	let arr = myItem.split(",");
-	appendInvestment(arr[0], parseInt(arr[1]), parseInt(arr[2]));
+	appendInvestment(arr[0], parseInt(arr[1]), parseInt(arr[2]), mySrc);
 	count ++;
 	myItem = localStorage.getItem("investment" + count);
+	mySrc = localStorage.getItem("investment" + count + "_image");
   }
-  let investmentsObj = {}; //{<name>: <nameid> or 'invalid',}
+  let investmentsObj = {}; //{<name>: [<nameid> or 'invalid', <src> or 'invalid']}
   //<name>,<qty>,<invested>,<nameid>
   for(let i=0; i<window.count; i++){
     let arr = localStorage.getItem("investment" + i).split(",");
-    investmentsObj[arr[0]] = arr[3];
+	let src = localStorage.getItem("investment" + i + "_image");
+	let getImage = false;
+	if(src === "invalid"){
+		getImage = true;
+	}
+    investmentsObj[arr[0]] = [arr[3], getImage];
   }
   requestData(investmentsObj);
 }
@@ -34,11 +41,19 @@ function beautifyCurrency(invested){
   return dollars + "." + cents + " USD";
 }
 
-function appendInvestment(name, qty, invested){
+function appendInvestment(name, qty, invested, src){
   let myInvestment = document.createElement("div");
   myInvestment.setAttribute("class", "investment");
   myInvestment.setAttribute("id", "investment" + count);
   myInvestment.setAttribute("data-name", name);
+  let myImage = document.createElement("img");
+  myImage.setAttribute("class", "investment-image");
+  if(src === "invalid"){
+	  myImage.setAttribute("src", "/icons/unknown.png");
+  } else {
+	  myImage.setAttribute("src", src);
+  }
+  myInvestment.appendChild(myImage);
   let myLabel = document.createElement("div");
   myLabel.setAttribute("class", "investment-label");
   myLabel.innerHTML = "<span class='investment-title'>" + name + "</span>";
@@ -60,7 +75,14 @@ function appendInvestment(name, qty, invested){
 
 function submitEntry(override){
   if(event.key === 'Enter' || override){
-    let entryName = document.getElementById('searchAuto');
+    fulfillSubmission();
+  } else if(event.key === 'Escape') {
+    submitCancel();
+  }
+}
+
+function fulfillSubmission(){
+	let entryName = document.getElementById('searchAuto');
     let entryQty = document.getElementById('entry-qty');
     let entryDollars = document.getElementById('entry-dollars');
     let entryCents = document.getElementById('entry-cents');
@@ -77,23 +99,40 @@ function submitEntry(override){
 	  } else { //total
 		  investedValue = inputValue;
 	  }
+	  //check merge so we don't overwrite data and have to re-request it
       localStorage.setItem("investment" + count, inputName + "," + inputQty + "," + investedValue + ",invalid");
+	  localStorage.setItem("investment" + count + "_image", "invalid");
       clearEntry();
-      appendInvestment(inputName, inputQty, investedValue);
+      appendInvestment(inputName, inputQty, investedValue, "invalid");
       entryName.focus();
       count ++;
 	  let requestObj = {};
-	  requestObj[inputName] = 'invalid';
+	  requestObj[inputName] = ['invalid', true];
 	  requestData(requestObj);
     } else { //warning strobe
       document.getElementById("portfolio-entry").style.backgroundColor="indianred";
       setTimeout(function(){
         document.getElementById("portfolio-entry").style.backgroundColor="lightgrey";
       }, 300);
+	  chrome.notifications.create('', {
+		  title: 'Just wanted to notify you',
+		  message: 'How great it is!',
+		  iconUrl: '/icons/icon-32.png',
+		  type: 'basic'
+	  });
     }
-  } else if(event.key === 'Escape') {
-    submitCancel();
-  }
+}
+
+function submitEntryAuto(){
+	if(event.key === 'Enter'){
+		if(topMatch === "invalid"){ //no matches, assume there is data ready for submission
+			fulfillSubmission();
+		} else { //select top autocomplete option
+			document.getElementById("first-match").click();
+		}
+	} else if(event.key === 'Escape') {
+		submitCancel();
+    }
 }
 
 function submitCancel(){
@@ -110,4 +149,4 @@ function clearEntry(){
 
 loadInvestment(0);
 
-export {addInvestment, beautifyCurrency, submitEntry};
+export {addInvestment, beautifyCurrency, submitEntry, submitEntryAuto};

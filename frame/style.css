@@ -1,3 +1,13 @@
+html, body {
+  height: 500px;
+  width: 416px;
+  padding: 0px 4px 4px 4px;
+  margin: 0px;
+  font: 16px Arial;
+  overflow-x: hidden;
+  overflow-y: overlay;
+}
+
 #head-data {
   text-align:left;
   padding: .8em;
@@ -25,18 +35,23 @@
 }
 .investment {
   display: grid;
-  grid-template-columns: auto 120px;
+  grid-template-columns: 72px auto 120px;
   grid-template-rows: auto;
   height: 72px;
   background-color: #334477;
   color: white;
   border-bottom: 1px solid cornflowerblue;
 }
+.investment-image {
+  width: 64px;
+  height: 64px;
+  margin: 4px;
+}
 .investment-label {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto auto;
-  padding: 1em;
+  padding: 1em 1em 1em 0em;
 }
 .investment-title {
   font-size: 1em;
@@ -104,6 +119,7 @@
 }
 #body {
   width: 400px;
+  padding-top: 8px;
 }
 
 input::-webkit-outer-spin-button,
@@ -115,4 +131,23 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

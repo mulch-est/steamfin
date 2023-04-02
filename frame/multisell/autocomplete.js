@@ -1,7 +1,6 @@
 /*
   requires boolean var expertOn,
   boolean func passesFilter(arr),
-  boolean func inList(item)
 */
 //https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete
 /*
@@ -10,6 +9,7 @@
     a 2d array of possible autocompleted values (str[])
     a callback function for when an autocomplete element is clicked
 */
+let topMatch = "invalid";
 function autocomplete(inp, arr, myCallback) {
   var currentFocus;
   /*execute a function when someone writes in the text field:*/
@@ -26,40 +26,41 @@ function autocomplete(inp, arr, myCallback) {
       a.setAttribute("class", "autocomplete-items");
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
+	  topMatch = "invalid";
       /*for each item in the array in the array...*/
       for(let db = 0; db < arr.length; db++){
         if(passesFilter(arr[db])){
           for (let i = 0; i < arr[db].length; i++) {
-            if(!inList(arr[db][i])){
-              var checkArr = autocompleteCheck(val.toUpperCase(), arr[db][i].toUpperCase());
-              if (checkArr[0]) {
-                /*create a DIV element for each matching element:*/
-                let b = document.createElement("DIV");
-                b.innerHTML = "<p>";
-                for(let j=0; j<checkArr[1]; j++){
-                  b.innerHTML += arr[db][i][j];
-                }
-                for(let j=checkArr[1]; j<checkArr[1] + val.length; j++){
-                  b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
-                }
-                for(let j=checkArr[1] + val.length; j<arr[db][i].length; j++){
-                  b.innerHTML += arr[db][i][j];
-                } 
-                b.innerHTML += "</p>";
-                /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
-                /*execute when someone clicks on the item value (DIV element):*/
-                b.addEventListener("click", function(e) {
-                    /*insert the value for the autocomplete text field:*/
-                    inp.value = this.getElementsByTagName("input")[0].value;
-                    /*close the list of autocompleted values,
-                    (or any other open lists of autocompleted values:*/
-                    closeAllLists();
-                    myCallback(b.innerText);
-                });
-                a.appendChild(b);
-              }
-            }
+			  var checkArr = autocompletePass(val.toUpperCase(), arr[db][i].toUpperCase());
+			  if (checkArr[0]) {
+				/*create a DIV element for each matching element:*/
+				let b = document.createElement("DIV");
+				if(topMatch === "invalid"){
+					b.setAttribute("id", "first-match");
+					topMatch = arr[db][i];
+				}
+				let boldArr = checkArr[1];
+				for(let j=0; j<boldArr.length; j++){
+				  if(boldArr[j]){
+					b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
+				  } else {
+					b.innerHTML += arr[db][i][j];
+				  }
+				}
+				/*insert a input field that will hold the current array item's value:*/
+				b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
+				/*execute when someone clicks on the item value (DIV element):*/
+				b.addEventListener("click", function(e) {
+					/*insert the value for the autocomplete text field:*/
+					inp.value = this.getElementsByTagName("input")[0].value;
+					/*close the list of autocompleted values,
+					(or any other open lists of autocompleted values:*/
+					closeAllLists();
+					myCallback(b.innerText);
+					topMatch = "invalid";
+				});
+				a.appendChild(b);
+			  }
           }
         }
       }
@@ -116,16 +117,39 @@ function autocomplete(inp, arr, myCallback) {
       }
     }
   }
-  function autocompleteCheck(entry, item){
-    /* check if item contains entry */
-    if(entry.length < item.length){
-      for(let i=0; i<item.length - entry.length; i++){
-        if(item.startsWith(entry, i)){
-          return [true, i];
+  //returns <bool:passed, bool[]: which chars in item should be bolded>
+  function autocompletePass(entry, item){
+    let tempItem = item;
+    let entryArr = entry.split(" ");
+    let boldArr = [];
+    for(let i=0; i<item.length; i++){
+      boldArr.push(false);
+    }
+    for(let i=0; i<entryArr.length; i++){
+      let index = autocompleteCheck(entryArr[i], tempItem);
+      if(index === -1){
+        return [false, []];
+      } else {
+        for(let j=index; j<index + entryArr[i].length; j++){
+          boldArr[j] = true;
+          tempItem[j] = " ";
         }
       }
     }
-    return [false, -1];
+    return [true, boldArr];
+  }
+  
+  //returns index at item where entry is located, -1 if dne
+  function autocompleteCheck(entry, item){
+    /* check if item contains entry */
+    if(entry.length < item.length){
+      for(let i=0; i<=item.length - entry.length; i++){
+        if(item.startsWith(entry, i)){
+          return i;
+        }
+      }
+    }
+    return -1;
   }
   /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
