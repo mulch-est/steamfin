@@ -2,7 +2,7 @@ import {addInvestment, submitEntry, submitEntryAuto} from '/frame/portfolio/inve
 
 document.getElementById("invest-button").addEventListener("click", addInvestment);
 document.getElementById("searchAuto").addEventListener("keydown", submitEntryAuto);
-let myInputs = ["entry-qty", "entry-dollars", "entry-cents"];
+
 let myNumbers = ["entry-qty", "entry-dollars", "entry-cents"];
 for(let i=0; i<myNumbers.length; i++){
   document.getElementById(myNumbers[i]).addEventListener("keydown", function(){

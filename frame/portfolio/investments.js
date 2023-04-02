@@ -1,6 +1,7 @@
 import {requestData} from '/scripts/injectScript.js';
 
 window.count = 0; //stores how many investments are being kept track of
+window.investMap = {};
 
 //#portfolio, check local storage for things
 function loadInvestment(num){
@@ -10,6 +11,7 @@ function loadInvestment(num){
   while(myItem !== null){
 	let arr = myItem.split(",");
 	appendInvestment(arr[0], parseInt(arr[1]), parseInt(arr[2]), mySrc);
+	investMap[arr[0]] = count;
 	count ++;
 	myItem = localStorage.getItem("investment" + count);
 	mySrc = localStorage.getItem("investment" + count + "_image");
@@ -105,6 +107,7 @@ function fulfillSubmission(){
       clearEntry();
       appendInvestment(inputName, inputQty, investedValue, "invalid");
       entryName.focus();
+	  investMap[inputName] = count;
       count ++;
 	  let requestObj = {};
 	  requestObj[inputName] = ['invalid', true];

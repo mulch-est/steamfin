@@ -7,29 +7,32 @@ let validSites = {
 
 //execute script on the active tab if we are on a valid site
 function requestData(myData){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-	  var currTab = tabs[0];
-	  let currScript = getSiteScript(currTab);
-	  if(currScript === null){
-		//write data as null
-		for(let i=0; i<window.count; i++){
-		  let myInvestment = document.getElementById("investment" + i);
-		  let myInfo = myInvestment.getElementsByClassName("investment-info")[0];
-		  myInfo.setAttribute("class", "investment-info error");
-		  myInfo.getElementsByClassName("investment-arrow")[0].innerHTML = "?";
-		  let dataArr = myInfo.getElementsByClassName("investment-data");
-		  dataArr[0].innerHTML = "?? %";
-		  dataArr[1].innerHTML = "?? USD";
-		}
-	  } else {
-		chrome.scripting.executeScript({
-		  target: {
-			tabId: currTab.id,
-			allFrames: true,
-		  },
-		  func: currScript,
-		  args: [myData]
-		});
+	
+	chrome.tabs.query({ url: 'https://steamcommunity.com/market/*' }, function(tabs) {
+	  if(tabs.length > 0){
+		  var currTab = tabs[0];
+		  let currScript = steamInject; //getSiteScript(currTab);
+		  if(currScript === null){
+			//write data as null
+			for(let i=0; i<window.count; i++){
+			  let myInvestment = document.getElementById("investment" + i);
+			  let myInfo = myInvestment.getElementsByClassName("investment-info")[0];
+			  myInfo.setAttribute("class", "investment-info error");
+			  myInfo.getElementsByClassName("investment-arrow")[0].innerHTML = "?";
+			  let dataArr = myInfo.getElementsByClassName("investment-data");
+			  dataArr[0].innerHTML = "?? %";
+			  dataArr[1].innerHTML = "?? USD";
+			}
+		  } else {
+			chrome.scripting.executeScript({
+			  target: {
+				tabId: currTab.id,
+				allFrames: true,
+			  },
+			  func: currScript,
+			  args: [myData]
+			});
+		  }
 	  }
 	});
 }
@@ -45,6 +48,7 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
 		  let currQty = parseInt(arr[1]);
 		  let oldInvestmentValue = parseInt(arr[2]);
 		  let currentInvestmentValue = highestOrder * currQty; //can replace with incremental add-up of buy orders
+		  localStorage.setItem("investment" + investMap[response[key][0]] + "_stale", currentInvestmentValue); //save stale data
 		  let investStatus = "profit";
 		  let arrowIndicator = "&#x1f845;";
 		  if(currentInvestmentValue < oldInvestmentValue){
@@ -96,12 +100,13 @@ chrome.runtime.onMessage.addListener(function(response, sender, sendResponse){
 			  }
 		  }
 		  console.log("retrieved img " + response[key][1] + " for " + response[key][0]);
+	  } else if(key === "init") {
+		  console.log("init : " + sender.tab.id);
 	  } else {
 		  console.warn("received unknown message: " + key);
 	  }
   }
 });
-
 
 function getSiteScript(currTab){
 	for(var key in validSites){

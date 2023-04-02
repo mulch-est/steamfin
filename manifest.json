@@ -3,8 +3,11 @@
   "description": "Manage your steam investments.",
   "version": "1.0.0",
   "manifest_version": 3,
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["scripting", "storage"],
   "optional_permissions" : ["notifications", "tabs"],
+  "host_permissions" : [
+    "https://steamcommunity.com/market/*"
+  ],
   "action": {
     "default_popup": "frame/steamfin.html",
     "default_icon": {
