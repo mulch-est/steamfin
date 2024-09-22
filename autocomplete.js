@@ -20,6 +20,7 @@ function autocomplete(inp, arr) {
       a.setAttribute("class", "autocomplete-items");
       /*append the DIV element as a child of the autocomplete container:*/
       this.parentNode.appendChild(a);
+      let queryResults = [];
       /*for each item in the array in the array...*/
       for(let db = 0; db < arr.length; db++){
         if(passesFilter(arr[db])){
@@ -27,25 +28,55 @@ function autocomplete(inp, arr) {
             if(!inList(arr[db][i])){
               var checkArr = autocompleteCheck(val, arr[db][i]);
               if (checkArr[0]) {
+              	let numBolds = 0;
                 /*create a DIV element for each matching element:*/
                 let b = document.createElement("DIV");
-                b.innerHTML = "<p>";
                 /*make the matching letters bold:*/
+                let bolding = false;
+                let lastBold = -1;
+                let bBuffer = "<p>";
+                //console.log(arr[db][i]);
                 for(let j=0; j<arr[db][i].length; j++){
                   var wrote = -1;
+                  //console.log("checking", arr[db][i][j], "numbold=", numBolds);
                   for(let k=0; k<checkArr[1].length; k++){
                     //character must be bolded
                     if(arr[db][i][j] === checkArr[1][k]){
-                      b.innerHTML += "<b>" + arr[db][i][j] + "</b>";
+                      if(!bolding){
+                        //console.log("Start bold");
+                      	bolding = true;
+                      	numBolds += 1;
+                      	lastBold = j;
+                      	bBuffer += "<b>";
+                      } else {
+                      	if(lastBold !== j - 1){
+                      	  //console.log("skip bold -- last=", lastBold, ", curr="+j);
+                      	  numBolds += 1;
+                      	}
+                      	lastBold = j;
+                      }
+                      bBuffer += arr[db][i][j];
                       wrote = k;
                       break;
+                    } else if (bolding) {
+                      //console.log("end bold");
+                      bolding = false;
+                      bBuffer += "</b>";
                     }
                   }
                   if(wrote === -1){
-                    b.innerHTML += arr[db][i][j];
-                  }else checkArr[1].splice(wrote, 1);
+                    bBuffer += arr[db][i][j];
+                  }else {
+                    checkArr[1].splice(wrote, 1);
+                    //end bold code above does not trigger on last
+                    if (checkArr[1].length == 0){
+                      bolding = false;
+                      bBuffer += "</b>";
+                    }
+                  }
                 }
-                b.innerHTML += "</p>";
+                bBuffer += "</p>";
+                b.innerHTML = bBuffer;
                 /*insert a input field that will hold the current array item's value:*/
                 b.innerHTML += "<input type='hidden' value='" + arr[db][i] + "'>";
                 /*execute when someone clicks on the item value (DIV element):*/
@@ -56,11 +87,19 @@ function autocomplete(inp, arr) {
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
                 });
-                a.appendChild(b);
+                //console.log("wrote", b.innerText, "num", numBolds);
+                queryResults.push([b, numBolds]);
               }
             }
           }
         }
+      }
+      //postprocess the results so less bolds come first
+      queryResults.sort(function(e1, e2) { 
+        return e1[1] - e2[1];
+      });
+      for(let i=0; i<queryResults.length; i++){
+      	a.appendChild(queryResults[i][0]);
       }
     }
   });
